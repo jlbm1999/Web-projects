@@ -1,0 +1,47 @@
+<script>
+
+    // Sign out button function
+    function signout_clicked(event){
+        Model.signout();
+        navigateTo(event, event.target.href);
+    }
+    
+</script>
+
+<!-- NAV with the links to all the different pages -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/" onclick="navigateTo(event, event.target.href)">DMART SPAIN</a>  <!-- Link to the index.html in the whole website-->
+        
+        <!-- Nav buttons. It collapses when the width gets smaller -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+            <ul class="navbar-nav mb-2 mb-md-0">
+
+                <!-- Nav item dropdown for the shopping cart items -->
+                {{#if user}}<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="cartDropdown" data-bs-toggle="dropdown" aria-expanded="false">Shopping {{#if user}} {{#Gthan items 0}}<span class="badge badge-secondary" id="items"> {{items}} </span>{{/Gthan}}{{/if}} </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="cartDropdown">
+                        <li><a class="dropdown-item" href="/cart" onclick="navigateTo(event, event.target.href)">Show cart</a></li>
+                        <li><a class="dropdown-item" href="/purchase" onclick="navigateTo(event, event.target.href)">Purchase</a></li>
+                    </ul>
+                </li>
+                {{/if}}
+
+                <!-- Nav item dropdown for the user items -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">User</a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="userDropdown">
+                        <li>{{#if user}}{{else}}<a class="dropdown-item" href="/signin" onclick="navigateTo(event, event.target.href)">Sign in</a></li>
+                        <li><a class="dropdown-item" href="/signup" onclick="navigateTo(event, event.target.href)">Sign up</a></li>{{/if}}
+                        {{#if user}}<li><a class="dropdown-item" href="/profile" onclick="navigateTo(event, event.target.href)">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/" onclick="signout_clicked(event)">Sign out</a></li>{{/if}}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

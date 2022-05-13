@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="icon" type="image/jpeg" href="pictures/banner.jpeg">
+    
+    <title>DMART SPAIN</title>
+  </head>
+
+  <body>
+
+    <!-- ALL THE HTML CONTENT WILL BE DISPLAYED HERE -->
+    <div class="d-flex flex-column min-vh-100"" id="content"></div>
+    
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <!-- HandleBars -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/model.js"></script>
+    <script src="/js/messages.js"></script>
+    
+  
+    <script>
+
+      var context = {}
+
+    // We get the html code from the .hbs template and then render it inside the content div 
+      function render(url, container, context) {
+              return $.ajax({
+                  url: url,
+                  method: 'GET'
+          }).done(function (source) {
+              var template = Handlebars.compile(source);
+              var html = template(context);
+              $(container).html(html);
+          }).fail(function (error) {
+              console.error('GET ', url, error)
+          })
+      }
+
+      // Function to load partial files
+      function loadPartial(url, partial) {
+        return $.ajax({
+        url: url,
+        method: 'GET'
+        }).done(function (source) {
+          Handlebars.registerPartial(partial, source);
+        }).fail(function (error) {
+          console.error('GET ', url, error);
+        });
+      }
+
+      // So we can navigate to any template
+      function navigateTo(event, url) {
+        event.preventDefault();
+        history.pushState(null, '', url);
+        route();
+      }
+
+      // Defines the route for navigateTo
+      function route() {
+      var path = location.pathname;
+      var matches = null;
+      var templates = ['cart','order', 'profile', 'purchase', 'signin', 'signup'];
+      console.log('ROUTING ', path);
+
+      context = {user: Model.getToken(), items: 0, messages: {success: Messages.success, danger: Messages.danger}};
+      Messages.clear();
+      var cartQtyP = Model.getCartQty().done(function (cartQty){
+        context.items = cartQty;
+      }).fail(function (cartQty){
+        console.error('Cannot retrieve cart quantity');
+      });
+      
+
+      if (matches = path.match(/^\/$/)){
+        var productsP = Model.getProducts().done(function (products){
+          context.products = products;
+        }).fail(function (){
+          console.error('Cannot retrieve products');
+        });
+        $.when(cartQtyP, productsP).always(function (){
+          render('/templates/index.hbs', '#content', context)
+        });
+      }
+
+      else if (matches = path.match(/^\/order\/id\/([0-9a-z^\/]+)\/?$/)) {
+        var orderP = Model.getOrder(matches[1]).done(function (order) {
+          context.orders = order;
+        }).fail(function () {
+          console.error('Cannot retrieve cart');
+        });
+        $.when(cartQtyP, orderP).always(function() {
+          if (context.orders) {
+            render('/templates/order.hbs', '#content', context);
+          } else {
+            render('/templates/not-found.hbs', '#content', context);
+          }
+        });
+      }
+
+      else if (matches = path.match(/^\/cart\/?$/)){
+        var cartP = Model.getCart().done(function (cart){
+          context.shoppingCart = cart;
+        }).fail(function (){
+          console.error('Cannot retrieve cart');
+        });
+        $.when(cartQtyP, cartP).always(function (){
+          render('/templates/cart.hbs', '#content', context);
+        });
+      }
+
+      else if (matches = path.match(/^\/purchase\/?$/)){
+        var cartP = Model.getCart().done(function (cart){
+          context.shoppingCart = cart;
+        }).fail(function (){
+          console.error('Cannot retrieve purchase');
+        });
+        $.when(cartQtyP, cartP).always(function (){
+          render('/templates/purchase.hbs', '#content', context);
+        });
+      }
+
+      else if (matches = path.match(/^\/profile\/?$/)){
+        var profileP = Model.getProfile().done(function (profile){
+          context.profile = profile;
+        }).fail(function (){
+          console.error('Cannot retrieve profile');
+        });
+
+        var ordersP = Model.getOrders().done(function (orders){
+          context.orders = orders;
+        }).fail(function (){
+          console.error('Cannot retrieve orders');
+        })
+        $.when(cartQtyP, profileP).always(function (){
+          render('/templates/profile.hbs', '#content', context);
+        });
+      }
+
+      else if ((matches = path.match(/^\/([^\/]*)\/?$/)) && templates.includes(matches[1])) {
+        $.when(cartQtyP).always(function (){
+          render('/templates/' + matches[1] + '.hbs', '#content', context);
+        });
+      }
+
+      else{
+        $.when(cartQtyP).always(function() {
+          render('/templates/not-found.hbs', '#content', context);
+        });
+      }
+    }
+
+      // Partials for the header and footer
+      window.addEventListener('popstate', (event) => route(), false);
+      $.when(loadPartial('/partials/navbar.hbs', 'navbar'),   // We use 'when' so we load everything at the same time, when the navbar loads
+        loadPartial('/partials/header.hbs', 'header'),
+        loadPartial('/partials/footer.hbs', 'footer'),
+        loadPartial('/partials/messages.hbs', 'messages')
+      ).always(function () {
+        route();
+      });
+
+      $(function () {
+        window.addEventListener('popstate', (event) => route(), false);
+        render('templates/index.hbs', '#content', Model)
+      });
+
+      // Partial to format the numbers in the index page from int to float with 2 decimal and the € symbol
+      Handlebars.registerHelper('formatPrice', function (price){
+        var result = (Math.round(price * 100) / 100).toFixed(2) + ' €';
+        return new Handlebars.SafeString(result);
+      });
+
+      // Handlebar used to check if 2 elements are equal. Used to see if an array is empty so we can show, for instance, "There are no items in the cart" or the list of items inside the cart
+      Handlebars.registerHelper('ifCond', function(v1, v2, options) {
+      if(v1 === v2) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+      });
+
+      Handlebars.registerHelper('Gthan', function(v1, v2, options){
+        if (v1 > v2){
+          return options.fn(this);
+        }
+        return options.inverse(this);
+      });
+
+      // Handlebar d to format the new Date() output into dd/mm/yyyy
+      Handlebars.registerHelper('formatDate', function(){
+        var date = ((context.profile.birth).split('T')[0]).split('-')
+        return date[2] + '/' + date[1] + '/' + date[0]
+      });
+
+      Handlebars.registerHelper('formatDateProfile', function(date){
+        var dates = ((date).split('T')[0]).split('-')
+        return dates[2] + '/' + dates[1] + '/' + dates[0]
+      });
+
+      // Handlebar used to format new Date() to dd/mm/yyyy for orders
+      Handlebars.registerHelper('convertDate', function(date){
+        if (date){
+          var newDate = ((date).split('T')[0]).split('-')
+          return newDate[2] + '/' + newDate[1] + '/' + newDate[0]
+        }
+      });
+
+      // Handlebar to return the total value of an specific order
+      Handlebars.registerHelper('totalOrder', function(order){
+        var total = 0;
+        for (let i of order){
+          total = total + i.total;
+        }
+        return total;
+      });
+
+      // Handlebar to show the final information in each order.
+      Handlebars.registerHelper('orderData', function(action){
+        var id = window.location.href.split("/")
+        id = id[id.length - 1];
+        var total = 0;
+
+        for (let i of context.orders.orderItems){
+          total = total + i.total;
+        }
+
+        switch (action){
+          case 'subtotal': return (total - ((total*21)/100)).toFixed(2);
+          break;
+
+          case 'tax': return ((total*21)/100).toFixed(2);
+          break;
+
+          case 'total': return total
+          break;
+
+          default:
+          break;
+        }
+      });
+
+      // Handlebar to show the final information in each purchase.
+      Handlebars.registerHelper('purchaseData', function(action){
+        var total = 0;
+        for (let i = 0; i < context.shoppingCart.length; i++){
+          total = total + context.shoppingCart[i].total;
+        }
+
+        switch (action){
+          case 'subtotal': return (total - ((total*21)/100)).toFixed(2);
+          break;
+
+          case 'tax': return ((total*21)/100).toFixed(2);
+          break;
+
+          case 'total': return total
+          break;
+
+          default:
+          break;
+        }
+      });
+
+    </script>
+  </body>
+</html>

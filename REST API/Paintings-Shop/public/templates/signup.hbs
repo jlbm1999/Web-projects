@@ -1,0 +1,87 @@
+<script>
+
+    function signup_clicked(event){
+        event.preventDefault();
+        var form = document.getElementById('signup-form');
+        form.classList.add('was-validated');
+        if (form.checkValidity()){     
+            if ($('#password').val() != $('#confirmpassword').val()){   // Confirm that passwords are equal
+                Messages.danger.push('Confirm the password correctly')
+                navigateTo(event, '/signup');
+            }
+            else{
+                Model.signup($('#name').val(), $('#surname').val(), $('#address').val(), $('#birth').val(), $('#email').val(), $('#password').val()).done(
+                function(){
+                    Messages.success.push('Welcome to our webpage!')
+                    navigateTo(event, event.target.href);
+                }).fail(function (error){
+                    Messages.danger.push(`${error.statusText} (${error.status})`);
+                    Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
+                    navigateTo(event, '/signup');
+                });
+            }
+        }
+    }
+
+</script>
+
+{{> navbar}}
+{{> header}}
+{{> messages}}
+
+<!-- Main content of the page will be developed here. -->
+<main>
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col">
+                <h1>Sign up</h1><br>
+            </div>
+        </div>
+
+        <form id="signup-form" class="w-75 mx-auto needs-validations" novalidate>
+            <div class="form-group">
+                <input type="name" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Name" required="" autofocus="">
+                <div class="invalid-feedback">The name field cannot be empty</div>
+                <br>
+            </div>
+            <div class="form-group">
+                <input type="surname" class="form-control" id="surname" aria-describedby="surnameHelp" placeholder="Surname" required="" autofocus="">
+                <div class="invalid-feedback">The surname field cannot be empty</div>
+                <br>
+            </div>
+            <div class="form-group">
+                <input type="address" class="form-control" id="address" aria-describedby="addressHelp" placeholder="Address" required="" autofocus="">
+                <div class="invalid-feedback">The address field cannot be empty</div>
+                <br>
+            </div>
+            <div class="form-group">
+                <input type="date" class="form-control" id="birth" aria-describedby="birthHelp" placeholder="dd/mm/aaaa" required="" autofocus="">
+                <div class="invalid-feedback">The date field cannot be empty</div>
+                <br>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email address" required="" autofocus="">
+                <div class="invalid-feedback">The email field cannot be empty</div>
+                <br>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Password" required="" autofocus="">
+                <div class="invalid-feedback">The password field cannot be empty</div>
+                <br>
+            </div>
+            <div class="form-group"> 
+                <input type="password" name="confirmpassword" class="form-control" id="confirmpassword" aria-describedby="confirmPasswordHelp" placeholder="Confirm Password" required="" autofocus="">
+                <div class="invalid-feedback" id="confirmPassword">The password has to be confirmed</div>
+                <br>
+            </div>
+            
+            <div class="row justify-content-end text-end">
+                <div class="col">
+                    <a href="/" class="btn btn-primary" onclick="signup_clicked(event)">Sign up</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+{{> footer}}

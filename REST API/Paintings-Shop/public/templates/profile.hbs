@@ -1,0 +1,56 @@
+<script>
+
+    // Details button function
+    function details_clicked(event, id){
+        event.preventDefault();
+        navigateTo(event, `order/id/${id}`);
+    }
+
+</script>
+
+{{> navbar}}
+{{> header}}
+{{> messages}}
+
+<!-- Main content of the page will be developed here. -->
+    <main>
+        <div class="container">
+            <h1>Profile</h1>
+
+            <p><b>Name: </b>{{this.profile.name}}</p>
+            <p><b>Surname: </b>{{profile.surname}}</p>
+            <p><b>Birth: </b>{{formatDate}}</p>
+            <p><b>Address: </b>{{profile.address}}</p>
+            <p><b>Email: </b>{{profile.email}}</p>
+
+            <hr>
+            <h1>Order list</h1>
+
+            {{#if this.orders.length}}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-3"><b>Date</b></div>
+                        <div class="col-3"><b>Number</b></div>
+                        <div class="col-3"><b>Total</b></div>
+                    </div>
+                </li>
+                {{#each this.orders}}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-3">{{formatDateProfile this.date}}</div>
+                        <div class="col-3">{{_id}}</div>
+                        <div class="col-3">{{totalOrder orderItems}}</div>
+                        <div class="col-3"><button type="button" onclick="details_clicked(event, '{{_id}}')" class="btn btn-primary"><a href="/order" style="color: white; text-decoration:none">Details</a></button></div>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <h1>No orders yet</h1>
+            {{/if}}
+        </div>
+        
+    </main>
+
+{{> footer}}

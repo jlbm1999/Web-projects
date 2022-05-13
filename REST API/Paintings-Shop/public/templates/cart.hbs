@@ -1,0 +1,95 @@
+<script>
+
+    function removeItem(event, pid, all){
+        event.preventDefault();
+        Model.removeItem(pid, all).done(function (){
+            route();
+        }).fail(function (error){
+            console.error('REMOVEITEM ERROR', error.status, error.statusText);
+        });
+    };
+
+    // Purchase button function
+    function purchase_clicked(event){
+        navigateTo(event, event.target.href);
+    }
+
+</script>
+
+
+{{> navbar}}
+{{> header}}
+{{> messages}}
+
+<!-- Main content of the page will be developed here. -->
+<main>
+    <!-- We will show all the elements in the shopping cart -->
+    <div class="container">
+        <h1>Shopping Cart</h1>  <!-- Title -->
+
+        {{#ifCond items 0}} 
+        <h1>No product items in the shopping cart yet</h1>  <!-- If there are no items in the cart, this h1 will be the content of the page -->
+        {{else}}
+        <!-- Sum of the price of all the elements in the cart -->
+        <div class="row text-end">
+            <div class="col">
+                <p><b>Total &euro; </b>{{purchaseData 'total'}}</p> <!-- This id will have assigned the value of the sum of the elements in the cart -->
+            </div>
+        </div>
+
+        <hr>
+        <h1>Items</h1>
+        <hr>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <!-- Titles of the table -->
+                <div class="row">
+                    <div class="col-2"><b>Qty</b></div>
+                    <div class="col-2"><b>Product</b></div>
+                    <div class="col-2"><b>Price</b></div>
+                    <div class="col-2"><b>Total</b></div>
+                </div>
+            </li>
+
+            {{#each this.shoppingCart}}
+            <li class="list-group-item">
+                <!-- First element in the shopping cart -->
+                <div class="row">
+                    <div class="col-2">{{this.qty}}</div>
+                    <div class="col-2">{{this.product.title}}</div>
+                    <div class="col-2">{{this.product.price}}</div>
+                    <div class="col-2">{{this.total}}</div>
+                    <div class="col-2">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Remove
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/cart" onclick="removeItem(event, '{{this.product._id}}', false)">Remove 1</a>
+                            <a class="dropdown-item" href="/cart" onclick="removeItem(event, '{{this.product._id}}', true)">Remove all</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+        </ul>           
+        
+        <!-- Total price, with taxes -->
+        <br>
+        <p><b>Subtotal: &euro; </b>{{purchaseData 'subtotal'}}</p>
+        <p><b>Tax: &euro; </b>{{purchaseData 'tax'}}</p>
+        <p><b>Total: &euro; </b>{{purchaseData 'total'}}</p>
+
+        <div class="row text-end">
+            <div class="col">
+                <a href="/purchase" class="btn btn-primary" onclick="purchase_clicked(event)">Purchase</a>
+            </div>
+        </div>
+    </div>
+    {{/ifCond}}
+</main>
+
+{{> footer}}
+

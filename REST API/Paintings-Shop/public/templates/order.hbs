@@ -1,0 +1,47 @@
+
+{{> navbar}}
+{{> header}}
+{{> messages}}
+
+<!-- Main content of the page will be developed here. -->
+<main>
+    <div class="container">
+        <h1>Order number {{this.orders._id}}</h1>
+        <br>
+
+        <p><b>Date: </b>{{convertDate this.orders.date}}</p>
+        <p><b>Address: </b>{{this.orders.address}}</p>
+        <p><b>Card number: </b>{{this.orders.cardnumber}}</p>
+        <p><b>Card holder: </b>{{this.orders.cardowner}}</p>
+        <hr>
+
+        <h1>Products</h1>
+        <hr>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-4"><b>Qty</b></div>
+                    <div class="col-4"><b>Product</b></div>
+                    <div class="col-4"><b>Total</b></div>
+                </div>
+            </li>
+            {{#each this.orders.orderItems}}
+            <li class="list-group-item">  
+                <div class="row">
+                    <div class="col-4">{{this.qty}}</div> 
+                    <div class="col-4">{{this.product.title}}</div> 
+                    <div class="col-4">{{this.total}}</div> 
+                </div>
+            </li>
+            {{/each}}
+                        
+        </ul>
+        <br>
+        <p><b>Subtotal: &euro; </b>{{orderData 'subtotal'}}</p>
+        <p><b>Tax: &euro; </b>{{orderData 'tax'}}</p>
+        <p><b>Total: &euro; </b>{{orderData 'total'}}</p>
+    </div>
+</main>
+
+{{> footer}}
