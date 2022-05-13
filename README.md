@@ -1,2 +1,2 @@
 # Web-proyects
-This repository will contain front-end related proyects (HTML, CSS, Javascript...)
+This repository will contain front-end related projects (HTML, CSS, Javascript...)
