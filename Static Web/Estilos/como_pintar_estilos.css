@@ -1,0 +1,80 @@
+.banner{
+    width: 100%;
+    height: calc(50ch - 50px);
+    background-size: cover;
+    background-position: center;
+    transition: all .1s ease-in-out;
+    background-image: url('../Cuadros/Imágenes/cuadro 8_edit.jpg');
+    background-attachment: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner_content_h1{
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    align-items: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.enlaces{
+    display: flex;
+    margin-top: 5px;
+    margin-left: 5%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.enlaces a{
+    text-decoration: none;
+    color: black;
+}
+
+.enlaces a:hover{
+    color: gray;
+    transition: .1s;
+}
+
+.enlaces p{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.video{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.video_titulo{
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 15px;
+}
+
+.video_intro{
+    text-align: justify;
+    margin: 15px;
+}
+
+.tutorial{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 15px;
+}
+
+.tutorial h2{
+    text-justify: center;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.tutorial div{
+    text-align: justify;
+}
+
+

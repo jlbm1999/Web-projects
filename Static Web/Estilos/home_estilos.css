@@ -1,0 +1,114 @@
+/* CSS PARA EL BANNER CON LA FOTO PRINCIPAL */
+
+.banner{
+    width: 100%;
+    height: calc(112ch - 50px);
+    background-size: cover;
+    background-position: center;
+    transition: all .1s ease-in-out;
+    background-image: url('../Cuadros/Imágenes/banner.jpeg');
+    filter: grayscale(0);
+}
+
+.banner_content{
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    color: #FFF;
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.banner_content_h1{
+    padding: 0;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-bottom: 50;
+    font-size: 50px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.banner_content a{
+    text-decoration: none;
+    color: white;
+    padding: 9px 20px;
+    border: 2px solid black;
+    transition: all .2s ease-in;
+}
+
+.banner_content a:hover{
+    background-color: white;
+    color: black;
+}
+
+body{
+    background-color: white;
+}
+
+.colecciones_h1{
+    font-size: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.colecciones{
+    display: grid;
+    grid-auto-rows: 550px;
+    grid-gap: 10px;
+    width: 100%;
+} 
+
+.colecciones_contenedor{
+    position: relative;
+}
+
+.colecciones_img{
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+}
+
+.colecciones_text{
+    font-size: 30px;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    background: linear-gradient(rgba(255,255,255,0),rgba(0,0,0,1));
+    width: 100%;
+    margin: 0;
+} 
+
+.colecciones_contenedor img:hover{
+    background-color: black;
+    opacity: 0.8;
+}
+
+@media screen and (min-width:1024px){
+    .colecciones{
+        width: 100%;
+        grid-template-columns: repeat(4, 1fr);
+        grid-column: span 2;
+    }
+
+    .grid-item:nth-child(2){
+        grid-column-start: span 2;
+    }
+    
+    .grid-item:nth-child(6){
+        grid-row-start: span 2; 
+    }
+}
+
+@media screen and (max-width:411px){
+    .colecciones{
+        grid-template-columns: repeat(1, 1fr);
+    }
+} 
+
+

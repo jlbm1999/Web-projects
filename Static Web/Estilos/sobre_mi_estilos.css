@@ -1,0 +1,67 @@
+.banner{
+    width: 100%;
+    height: calc(50ch - 50px);
+    background-size: cover;
+    background-position: center;
+    transition: all .1s ease-in-out;
+    background-image: url('../Cuadros/Imágenes/cuadro 6.jpg');
+    background-attachment: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner_content_h1{
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    align-items: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.enlaces{
+    display: flex;
+    margin-top: 5px;
+    margin-left: 5%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.enlaces a{
+    text-decoration: none;
+    color: black;
+}
+
+.enlaces a:hover{
+    color: gray;
+    transition: .1s;
+}
+
+.enlaces p{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.sobre_mi{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 8%;
+    margin-right: 8%;
+    max-width: 1300px;
+    margin-bottom: 200px;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.sobre_mi_titulo{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sobre_mi_info{
+    text-align: justify;
+}
+

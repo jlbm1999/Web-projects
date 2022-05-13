@@ -1,0 +1,138 @@
+.banner{
+    width: 100%;
+    height: calc(50ch - 50px);
+    background-size: cover;
+    transition: all .1s ease-in-out;
+    background-image: url('../Cuadros/Imágenes/banner2.jpg');
+    background-attachment: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner_content_h1{
+    font-size: 50px;
+    text-align: center;
+    color: white;
+    align-items: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.enlaces{
+    display: flex;
+    margin-top: 5px;
+    margin-left: 5%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.enlaces a{
+    text-decoration: none;
+    color: black;
+}
+
+.enlaces a:hover{
+    color: gray;
+    transition: .1s;
+}
+
+.enlaces p{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.colecciones_h1{
+    font-size: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.indice{
+    font-size: 20px;
+    margin: 0 5% 0 18%;
+    max-width: 200px;
+    display: block;
+    float: left;
+    text-align: right;
+    line-height : 30px;
+}
+
+.indice_titulo{
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.indice li a{
+    color: black;
+    text-decoration: none;
+    list-style: none;
+}
+
+.indice li a:hover{
+    color: gray;
+    transition: .1s;
+}
+
+.colecciones{
+    margin-left: 25%;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 250px 250px 250px;
+    grid-template-rows: 250px 250px 250px;
+    align-items: center;
+}
+
+.colecciones_text{
+    color: white;
+    background-color: black;
+    text-align: center;
+    font-size: 15px;
+    padding: 3px;
+    position: absolute;
+    display: none;
+} 
+
+.colecciones_contenedor img:hover{
+    background-color: black;
+    opacity: 0.8;
+}
+
+@media (max-width: 1250px){
+
+    .indice{
+        max-width: 175px;
+        margin: 0 5% 0 10%;
+    }
+
+    .colecciones{
+        grid-template-columns: 250px 250px;
+    }
+}
+
+@media (max-width: 800px){
+
+    .indice{
+        max-width: 150px;
+    }
+
+    .colecciones{
+        grid-template-columns: 250px;
+    }
+}
+
+@media (max-width: 411px){
+
+    .indice_titulo{
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .indice{
+        max-width: 105px;
+        margin: 0 5% 0 5%;
+        font-size: 15px;
+    }
+}
+

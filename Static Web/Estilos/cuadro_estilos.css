@@ -1,0 +1,195 @@
+
+.banner{
+    width: 100%;
+    height: calc(50ch - 50px);
+    background-size: cover;
+    background-position: center;
+    transition: all .1s ease-in-out;
+    background-image: url('../Cuadros/Imágenes/Cuadro 1.jpg');
+    background-attachment: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner_content_h1{
+    font-size: 50px;
+    text-align: center;
+    color: black;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.enlaces{
+    display: flex;
+    margin-top: 5px;
+    margin-left: 5%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.enlaces a{
+    text-decoration: none;
+    color: black;
+}
+
+.enlaces a:hover{
+    color: gray;
+    transition: .1s;
+}
+
+.enlaces p{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.producto{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+aside{
+    margin: 0 5% 0 10%;
+}
+
+.cuadro_a{
+    display: inline-block;
+}
+
+.cuadro{
+    min-width: 200px;
+
+}
+
+.cuadro_p{
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.centrar_cuadro{
+    align-items: center;
+    margin-left: 8%;
+    text-align: center;
+}
+
+.cuadro_tabla{
+    border-collapse: collapse; 
+    font-size: 20px;
+}
+
+.cuadro_tabla tr td{
+    align-items: center;
+    border: 1px solid black;
+}
+
+.cuadro_descripcion{
+    min-height: 460px;
+    max-width: 500px;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 5%;
+}
+
+.cuadro_titulo{
+    
+    text-align: left;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.cuadro_info{
+    text-align: justify;
+}
+
+@media (max-width: 1200px){
+
+    aside{
+        margin: 0 5% 0 10%;
+    }
+
+    .cuadro_descripcion{
+        max-width: 350px;
+        
+    }
+
+}
+
+@media (max-width: 869px){
+    .producto{
+        display: block;
+    }
+
+    aside{
+        margin: 0 20% 20px 20%;
+    }
+
+    .cuadro_descripcion{
+        max-width: 380px;
+        margin: 0 20% 20px 20%;
+    }
+
+}
+
+@media (max-width: 411px){
+    .producto{
+        display: block;
+    }
+
+    aside{
+        margin: 0 20% 20px 20%;
+    }
+
+    .centrar_cuadro{
+        display: flex;
+        justify-content: center;
+    }
+
+    .cuadro_descripcion{
+        margin: 0 15% 20px 15%;
+    }
+}
+
+.titulo_c{
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.comentarios{
+    margin-top: 5px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cuadro_nuevoComent{
+    align-items: center;
+    text-align: center;
+}
+
+.cuadro_nuevoComent li{
+    margin-top: 5px;
+}
+
+.caja_comentarios{
+    margin-top: 15px;
+    text-align: justify;
+}
+
+.caja_comentarios h2{
+    font-size: 30px;
+}
+
+.caja_comentarios .caja_comentarios_nombre{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
